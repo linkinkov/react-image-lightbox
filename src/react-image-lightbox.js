@@ -1187,10 +1187,13 @@ class ReactImageLightbox extends Component {
       }
 
       // Load unloaded images
-      if (props[type] && !this.isImageLoaded(props[type]) &&
-      !(props[type] === 'mainSrc' && props.mainCustomContent) && 
-      !(props[type] === 'prevSrc' && props.prevCustomContent) && 
-      !(props[type] === 'nextSrc' && props.nextCustomContent) ) {
+      if (
+        props[type] &&
+        !this.isImageLoaded(props[type]) &&
+        !(props[type] === 'mainSrc' && props.mainCustomContent) &&
+        !(props[type] === 'prevSrc' && props.prevCustomContent) &&
+        !(props[type] === 'nextSrc' && props.nextCustomContent)
+      ) {
         this.loadImage(
           type,
           props[type],
@@ -1313,19 +1316,22 @@ class ReactImageLightbox extends Component {
     // Images to be displayed
     const images = [];
     const addImage = (srcType, imageClass, transforms) => {
-      if(srcType === 'mainSrc' && mainCustomContent) {
+      if (srcType === 'mainSrc' && mainCustomContent) {
         images.push(
-          <div key={`${srcType}-mainCustomContent`} className={`${imageClass} ril__image`} >
+          <div
+            key={`${srcType}-mainCustomContent`}
+            className={`${imageClass} ril__image`}
+          >
             {mainCustomContent}
           </div>
         );
         return;
       }
-      if(srcType === 'prevSrc' && prevCustomContent) {
+      if (srcType === 'prevSrc' && prevCustomContent) {
         images.push(<div key={`${srcType}-prevCustomContent`} />);
         return;
       }
-      if(srcType === 'nextSrc' && nextCustomContent) {
+      if (srcType === 'nextSrc' && nextCustomContent) {
         images.push(<div key={`${srcType}-nextCustomContent`} />);
         return;
       }
@@ -1521,7 +1527,7 @@ class ReactImageLightbox extends Component {
               aria-label={this.props.prevLabel}
               onClick={!this.isAnimating() ? this.requestMovePrev : undefined} // Ignore clicks during animation
             />
-          ): null}
+          ) : null}
 
           {nextSrc || nextCustomContent ? (
             <button // Move to next image button
@@ -1531,7 +1537,7 @@ class ReactImageLightbox extends Component {
               aria-label={this.props.nextLabel}
               onClick={!this.isAnimating() ? this.requestMoveNext : undefined} // Ignore clicks during animation
             />
-          ): null}
+          ) : null}
 
           <div // Lightbox toolbar
             className="ril-toolbar ril__toolbar"
@@ -1651,15 +1657,13 @@ ReactImageLightbox.propTypes = {
   mainSrc: (props, prop, component) => {
     if (!props.mainSrc && !props.mainCustomContent) {
       return new Error(
-        `One of 'mainSrc' or 'mainCustomContent' is required by ${
-          component
-        } component.`
+        `One of 'mainSrc' or 'mainCustomContent' is required by ${component} component.`
       );
     }
     if (!props.mainCustomContent && typeof props.mainSrc !== 'string') {
-      return new Error(`Invalid prop \`${prop}\` of type \`${
-        typeof props.mainSrc
-      }\` supplied to \`${component}\`, expected \`string\`.`);
+      return new Error(
+        `Invalid prop \`${prop}\` of type \`${typeof props.mainSrc}\` supplied to \`${component}\`, expected \`string\`.`
+      );
     }
     return null;
   }, // eslint-disable-line react/no-unused-prop-types
